@@ -17,6 +17,8 @@ import reactor.core.publisher.Mono;
 public interface IssueRepository extends ReactiveCrudRepository<Issue, Long>, IssueRepositoryInternal {
     Flux<Issue> findAllBy(Pageable pageable);
 
+    Mono<Boolean> existsByIdAndUsername(Long id, String username);
+
     @Override
     <S extends Issue> Mono<S> save(S entity);
 

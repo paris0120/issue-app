@@ -64,7 +64,8 @@ public class IssueResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/issues")
-    public Mono<ResponseEntity<IssueDTO>> createIssue(@Valid @RequestBody IssueDTO issueDTO, Principal principal) throws URISyntaxException {
+    public Mono<ResponseEntity<IssueDTO>> createIssue(@Valid @RequestBody IssueDTO issueDTO, Principal principal)
+        throws URISyntaxException {
         log.debug("REST request to save Issue : {}", issueDTO);
         if (issueDTO.getId() != null) {
             throw new BadRequestAlertException("A new issue cannot already have an ID", ENTITY_NAME, "idexists");
@@ -97,7 +98,8 @@ public class IssueResource {
     @PutMapping("/issues/{id}")
     public Mono<ResponseEntity<IssueDTO>> updateIssue(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody IssueDTO issueDTO
+        @Valid @RequestBody IssueDTO issueDTO,
+        Principal principal
     ) throws URISyntaxException {
         log.debug("REST request to update Issue : {}, {}", id, issueDTO);
         if (issueDTO.getId() == null) {
@@ -108,14 +110,14 @@ public class IssueResource {
         }
 
         return issueRepository
-            .existsById(id)
+            .existsByIdAndUsername(id, principal.getName())
             .flatMap(exists -> {
                 if (!exists) {
                     return Mono.error(new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound"));
                 }
 
                 return issueService
-                    .update(issueDTO)
+                    .updateUserContent(issueDTO)
                     .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))
                     .map(result ->
                         ResponseEntity
@@ -140,7 +142,8 @@ public class IssueResource {
     @PatchMapping(value = "/issues/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public Mono<ResponseEntity<IssueDTO>> partialUpdateIssue(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody IssueDTO issueDTO
+        @NotNull @RequestBody IssueDTO issueDTO,
+        Principal principal
     ) throws URISyntaxException {
         log.debug("REST request to partial update Issue partially : {}, {}", id, issueDTO);
         if (issueDTO.getId() == null) {
@@ -151,13 +154,13 @@ public class IssueResource {
         }
 
         return issueRepository
-            .existsById(id)
+            .existsByIdAndUsername(id, principal.getName())
             .flatMap(exists -> {
                 if (!exists) {
                     return Mono.error(new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound"));
                 }
 
-                Mono<IssueDTO> result = issueService.partialUpdate(issueDTO);
+                Mono<IssueDTO> result = issueService.updateUserContent(issueDTO);
 
                 return result
                     .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))

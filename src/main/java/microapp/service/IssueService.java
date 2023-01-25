@@ -1,5 +1,7 @@
 package microapp.service;
 
+import java.time.Instant;
+import java.util.UUID;
 import microapp.domain.Issue;
 import microapp.domain.enumeration.IssuePriority;
 import microapp.domain.enumeration.IssueStatus;
@@ -14,9 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.time.Instant;
-import java.util.UUID;
 
 /**
  * Service Implementation for managing {@link Issue}.
@@ -42,29 +41,49 @@ public class IssueService {
      * @param issueDTO the entity to save.
      * @return the persisted entity.
      */
+
     public Mono<IssueDTO> save(IssueDTO issueDTO) {
+        issueDTO.setIssuePriority(IssuePriority.NORMAL);
+        issueDTO.setIssueStatus(IssueStatus.OPEN);
+        issueDTO.setCreated(Instant.now());
+        issueDTO.setModified(Instant.now());
+        issueDTO.setUuid(UUID.randomUUID());
         log.debug("Request to save Issue : {}", issueDTO);
-        Issue issue = issueMapper.toEntity(issueDTO);
-        issue.setIssuePriority(IssuePriority.NORMAL);
-        issue.setIssueStatus(IssueStatus.OPEN);
-        issue.setCreated(Instant.now());
-        issue.setModified(Instant.now());
-        issue.setUuid(UUID.randomUUID());
-        return issueRepository.save(issue).map(issueMapper::toDto);
+        return issueRepository.save(issueMapper.toEntity(issueDTO)).map(issueMapper::toDto);
     }
 
-    /**
-     * Update a issue.
-     *
-     * @param issueDTO the entity to save.
-     * @return the persisted entity.
-     */
-    public Mono<IssueDTO> update(IssueDTO issueDTO) {
-        log.debug("Request to update Issue : {}", issueDTO);
-        Issue issue = issueMapper.toEntity(issueDTO);
-        issue.setModified(Instant.now());
-        return issueRepository.save(issue)).map(issueMapper::toDto);
-    }
+    //    /**
+    //     * Update a issue.
+    //     *
+    //     * @param issueDTO the entity to save.
+    //     * @return the persisted entity.
+    //     */
+    //    public Mono<IssueDTO> update(IssueDTO issueDTO) {
+    //        issueDTO.setModified(Instant.now());
+    //        log.debug("Request to update Issue : {}", issueDTO);
+    //        return issueRepository.save(issueMapper.toEntity(issueDTO)).map(issueMapper::toDto);
+    //    }
+    //
+    //    /**
+    //     * Partially update a issue.
+    //     *
+    //     * @param issueDTO the entity to update partially.
+    //     * @return the persisted entity.
+    //     */
+    //    public Mono<IssueDTO> partialUpdate(IssueDTO issueDTO) {
+    //        log.debug("Request to partially update Issue : {}", issueDTO);
+    //        issueDTO.setModified(Instant.now());
+    //
+    //        return issueRepository
+    //            .findById(issueDTO.getId())
+    //            .map(existingIssue -> {
+    //                issueMapper.partialUpdate(existingIssue, issueDTO);
+    //
+    //                return existingIssue;
+    //            })
+    //            .flatMap(issueRepository::save)
+    //            .map(issueMapper::toDto);
+    //    }
 
     /**
      * Partially update a issue.
@@ -72,14 +91,29 @@ public class IssueService {
      * @param issueDTO the entity to update partially.
      * @return the persisted entity.
      */
-    public Mono<IssueDTO> partialUpdate(IssueDTO issueDTO) {
+    public Mono<IssueDTO> updateUserContent(IssueDTO issueDTO) {
         log.debug("Request to partially update Issue : {}", issueDTO);
-
+        issueDTO.setModified(Instant.now());
         return issueRepository
             .findById(issueDTO.getId())
             .map(existingIssue -> {
-                issueMapper.partialUpdate(existingIssue, issueDTO);
+                existingIssue.setIssueContent(issueDTO.getIssueContent());
+                existingIssue.setIssueTitle(issueDTO.getIssueTitle());
+                return existingIssue;
+            })
+            .flatMap(issueRepository::save)
+            .map(issueMapper::toDto);
+    }
 
+    public Mono<IssueDTO> updateManagementContent(IssueDTO issueDTO) {
+        log.debug("Request to partially update Issue : {}", issueDTO);
+        issueDTO.setModified(Instant.now());
+        return issueRepository
+            .findById(issueDTO.getId())
+            .map(existingIssue -> {
+                existingIssue.setIssueStatus(issueDTO.getIssueStatus());
+                existingIssue.setIssuePriority(issueDTO.getIssuePriority());
+                existingIssue.setIssueType(issueDTO.getIssueType());
                 return existingIssue;
             })
             .flatMap(issueRepository::save)

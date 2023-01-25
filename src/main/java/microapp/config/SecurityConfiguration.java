@@ -98,11 +98,9 @@ public class SecurityConfiguration {
             .authorizeExchange()
             .pathMatchers("/").permitAll()
             .pathMatchers("/*.*").permitAll()
-
             .pathMatchers("/api/customerservice/**").hasAuthority(AuthoritiesConstants.CUSTOMERSERVICE)
             .pathMatchers("/api/tech/**").hasAuthority(AuthoritiesConstants.TECH)
             .pathMatchers("/api/manager/**").hasAuthority(AuthoritiesConstants.MANAGER)
-
             .pathMatchers("/api/authenticate").permitAll()
             .pathMatchers("/api/auth-info").permitAll()
             .pathMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)

@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="issue">
+      <h2 data-cy="issueDetailsHeading"><span microappTranslate="issueApp.issueIssue.detail.title">Issue</span></h2>
+
+      <hr />
+
+      <microapp-alert-error></microapp-alert-error>
+
+      <microapp-alert></microapp-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span microappTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ issue.id }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.username">Username</span></dt>
+        <dd>
+          <span>{{ issue.username }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.issueTitle">Issue Title</span></dt>
+        <dd>
+          <span>{{ issue.issueTitle }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.issueContent">Issue Content</span></dt>
+        <dd>
+          <span>{{ issue.issueContent }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.issueType">Issue Type</span></dt>
+        <dd>
+          <span microappTranslate="{{ 'issueApp.IssueType.' + issue.issueType }}">{{ issue.issueType }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.issueStatus">Issue Status</span></dt>
+        <dd>
+          <span microappTranslate="{{ 'issueApp.IssueStatus.' + issue.issueStatus }}">{{ issue.issueStatus }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.issuePriority">Issue Priority</span></dt>
+        <dd>
+          <span microappTranslate="{{ 'issueApp.IssuePriority.' + issue.issuePriority }}">{{ issue.issuePriority }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.uuid">Uuid</span></dt>
+        <dd>
+          <span>{{ issue.uuid }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.created">Created</span></dt>
+        <dd>
+          <span>{{ issue.created | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.modified">Modified</span></dt>
+        <dd>
+          <span>{{ issue.modified | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssue.deleted">Deleted</span></dt>
+        <dd>
+          <span>{{ issue.deleted | formatMediumDatetime }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span microappTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/issue/issue', issue.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span microappTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

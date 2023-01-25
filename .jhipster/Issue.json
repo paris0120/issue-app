@@ -1,0 +1,72 @@
+{
+  "applications": ["issue"],
+  "changelogDate": "20230125000313",
+  "clientRootFolder": "issue",
+  "databaseType": "sql",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "issue",
+  "fields": [
+    {
+      "fieldName": "username",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "issueTitle",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "2"
+    },
+    {
+      "fieldName": "issueContent",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "10"
+    },
+    {
+      "fieldName": "issueType",
+      "fieldType": "IssueType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "BUG (Bug),FEATURE (Feature)"
+    },
+    {
+      "fieldName": "issueStatus",
+      "fieldType": "IssueStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "OPEN (Open),VERIFIED (Verified),WAITING_FOR_RESPONSE (Waiting for Customer Response),IN_PROGRESS (In Progress),REOPENED (Reopened),CANNOT_REPRODUCE (Cannot Reproduce),DUPLICATE (Duplicate),SOLVED (Solved),WONT_IMPLEMENT (Won't Implement),CANCELLED (Cancelled),CLOSED (Closed)"
+    },
+    {
+      "fieldName": "issuePriority",
+      "fieldType": "IssuePriority",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "HIGHEST (Highest),HIGHER (Higher),HIGH (High),NORMAL (Normal),LOW (Low),LOWER (Lower),LOWERST (Lowest)"
+    },
+    {
+      "fieldName": "uuid",
+      "fieldType": "UUID",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "created",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modified",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "deleted",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "issue",
+  "name": "Issue",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

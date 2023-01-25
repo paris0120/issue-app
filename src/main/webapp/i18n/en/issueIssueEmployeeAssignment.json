@@ -1,0 +1,27 @@
+{
+  "issueApp": {
+    "issueIssueEmployeeAssignment": {
+      "home": {
+        "title": "Issue Employee Assignments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Issue Employee Assignment",
+        "createOrEditLabel": "Create or edit a Issue Employee Assignment",
+        "notFound": "No Issue Employee Assignments found"
+      },
+      "created": "A new Issue Employee Assignment is created with identifier {{ param }}",
+      "updated": "A Issue Employee Assignment is updated with identifier {{ param }}",
+      "deleted": "A Issue Employee Assignment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Issue Employee Assignment {{ id }}?"
+      },
+      "detail": {
+        "title": "Issue Employee Assignment"
+      },
+      "id": "ID",
+      "issueId": "Issue Id",
+      "issueUuid": "Issue Uuid",
+      "username": "Username",
+      "issueAssignmentTitle": "Issue Assignment Title"
+    }
+  }
+}

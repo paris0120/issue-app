@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="issueEmployeeAssignment">
+      <h2 data-cy="issueEmployeeAssignmentDetailsHeading">
+        <span microappTranslate="issueApp.issueIssueEmployeeAssignment.detail.title">Issue Employee Assignment</span>
+      </h2>
+
+      <hr />
+
+      <microapp-alert-error></microapp-alert-error>
+
+      <microapp-alert></microapp-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span microappTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ issueEmployeeAssignment.id }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssueEmployeeAssignment.issueId">Issue Id</span></dt>
+        <dd>
+          <span>{{ issueEmployeeAssignment.issueId }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssueEmployeeAssignment.issueUuid">Issue Uuid</span></dt>
+        <dd>
+          <span>{{ issueEmployeeAssignment.issueUuid }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssueEmployeeAssignment.username">Username</span></dt>
+        <dd>
+          <span>{{ issueEmployeeAssignment.username }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssueEmployeeAssignment.issueAssignmentTitle">Issue Assignment Title</span></dt>
+        <dd>
+          <span>{{ issueEmployeeAssignment.issueAssignmentTitle }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span microappTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/issue/issue-employee-assignment', issueEmployeeAssignment.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span microappTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

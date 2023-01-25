@@ -1,0 +1,87 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="microapp-issue-tag-heading"
+        data-cy="IssueTagCreateUpdateHeading"
+        microappTranslate="issueApp.issueIssueTag.home.createOrEditLabel"
+      >
+        Create or edit a Issue Tag
+      </h2>
+
+      <div>
+        <microapp-alert-error></microapp-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" microappTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" microappTranslate="issueApp.issueIssueTag.issueId" for="field_issueId">Issue Id</label>
+          <input type="number" class="form-control" name="issueId" id="field_issueId" data-cy="issueId" formControlName="issueId" />
+          <div *ngIf="editForm.get('issueId')!.invalid && (editForm.get('issueId')!.dirty || editForm.get('issueId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('issueId')?.errors?.required"
+              microappTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('issueId')?.errors?.number"
+              microappTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" microappTranslate="issueApp.issueIssueTag.issueUuid" for="field_issueUuid">Issue Uuid</label>
+          <input type="text" class="form-control" name="issueUuid" id="field_issueUuid" data-cy="issueUuid" formControlName="issueUuid" />
+          <div *ngIf="editForm.get('issueUuid')!.invalid && (editForm.get('issueUuid')!.dirty || editForm.get('issueUuid')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('issueUuid')?.errors?.required"
+              microappTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" microappTranslate="issueApp.issueIssueTag.tag" for="field_tag">Tag</label>
+          <input type="text" class="form-control" name="tag" id="field_tag" data-cy="tag" formControlName="tag" />
+          <div *ngIf="editForm.get('tag')!.invalid && (editForm.get('tag')!.dirty || editForm.get('tag')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tag')?.errors?.required"
+              microappTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span microappTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span microappTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

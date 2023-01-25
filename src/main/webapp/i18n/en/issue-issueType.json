@@ -1,0 +1,9 @@
+{
+  "issueApp": {
+    "IssueType": {
+      "null": "",
+      "BUG": "Bug",
+      "FEATURE": "Feature"
+    }
+  }
+}

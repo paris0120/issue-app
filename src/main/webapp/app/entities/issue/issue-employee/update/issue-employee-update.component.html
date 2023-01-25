@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="microapp-issue-employee-heading"
+        data-cy="IssueEmployeeCreateUpdateHeading"
+        microappTranslate="issueApp.issueIssueEmployee.home.createOrEditLabel"
+      >
+        Create or edit a Issue Employee
+      </h2>
+
+      <div>
+        <microapp-alert-error></microapp-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" microappTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" microappTranslate="issueApp.issueIssueEmployee.username" for="field_username">Username</label>
+          <input type="text" class="form-control" name="username" id="field_username" data-cy="username" formControlName="username" />
+          <div *ngIf="editForm.get('username')!.invalid && (editForm.get('username')!.dirty || editForm.get('username')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('username')?.errors?.required"
+              microappTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" microappTranslate="issueApp.issueIssueEmployee.issueAssignmentTitle" for="field_issueAssignmentTitle"
+            >Issue Assignment Title</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="issueAssignmentTitle"
+            id="field_issueAssignmentTitle"
+            data-cy="issueAssignmentTitle"
+            formControlName="issueAssignmentTitle"
+          />
+          <div
+            *ngIf="
+              editForm.get('issueAssignmentTitle')!.invalid &&
+              (editForm.get('issueAssignmentTitle')!.dirty || editForm.get('issueAssignmentTitle')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('issueAssignmentTitle')?.errors?.required"
+              microappTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span microappTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span microappTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

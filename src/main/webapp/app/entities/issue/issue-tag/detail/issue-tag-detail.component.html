@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="issueTag">
+      <h2 data-cy="issueTagDetailsHeading"><span microappTranslate="issueApp.issueIssueTag.detail.title">Issue Tag</span></h2>
+
+      <hr />
+
+      <microapp-alert-error></microapp-alert-error>
+
+      <microapp-alert></microapp-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span microappTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ issueTag.id }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssueTag.issueId">Issue Id</span></dt>
+        <dd>
+          <span>{{ issueTag.issueId }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssueTag.issueUuid">Issue Uuid</span></dt>
+        <dd>
+          <span>{{ issueTag.issueUuid }}</span>
+        </dd>
+        <dt><span microappTranslate="issueApp.issueIssueTag.tag">Tag</span></dt>
+        <dd>
+          <span>{{ issueTag.tag }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span microappTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/issue/issue-tag', issueTag.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span microappTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
